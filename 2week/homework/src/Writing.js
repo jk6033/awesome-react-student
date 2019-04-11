@@ -29,23 +29,39 @@ class Writing extends Component {
 
   handleFocus = (e) => {
     if (!this.state.isWritingTitleFocused) {
-      console.log('test')
+      console.log('WritingTitle gets focus')
       this.setState({
         isWritingTitleFocused: true
       })
     }
   }
 
+  handleBlur = (e) => {
+    if (this.state.isWritingTitleFocused && this.state.title==="" && this.state.content==="") {
+      console.log('WritingTitle loses focus')
+      this.setState({
+        isWritingTitleFocused: false
+      })
+    }
+  }
+
+  submitBlur = (e) => {
+    console.log('WritingTitle loses focus because of submit')
+    this.setState({isWritingTitleFocused: false})
+  }
+
   render() {
     const writingTitleProps = {
       title: this.state.title,
       handleChange: this.handleChange,
-      handleFocus: this.handleFocus
+      handleFocus: this.handleFocus,
+      handleBlur: this.handleBlur
     }
 
     const writingContentProps = {
       content: this.state.content,
-      handleChange: this.handleChange
+      handleChange: this.handleChange,
+      handleBlur: this.handleBlur
     }
 
     const {isWritingTitleFocused} = this.state
@@ -56,7 +72,7 @@ class Writing extends Component {
         <form onSubmit={handleSubmit}>
           <WritingTitle {...writingTitleProps} />
           {isWritingTitleFocused && <WritingContent {...writingContentProps} />}
-          <input type='submit' value='Submit' />
+          <input type='submit' value='Submit' onClick={this.submitBlur}/>
         </form>
       </div>
     )
@@ -72,6 +88,7 @@ function WritingTitle(props) {
         value={props.title}
         onChange={props.handleChange}
         onFocus={props.handleFocus}
+        onBlur={props.handleBlur}
       />
     </div>
   )
@@ -85,6 +102,7 @@ function WritingContent(props) {
         name='content'
         value={props.content}
         onChange={props.handleChange}
+        onBlur={props.handleBlur}
       />
     </div>
   )

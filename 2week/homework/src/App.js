@@ -1,5 +1,4 @@
 import React, {Component} from "react"
-
 import Writing from "./Writing"
 import Note from "./Note"
 
@@ -8,9 +7,9 @@ class App extends Component {
     super(props)
     this.state = {
       savedNotes: [
-        {id: 0, title: "title1", content: "default1"},
-        {id: 1, title: "title2", content: "default2"},
-        {id: 2, title: "title3", content: "default3"}
+        {id: 0, title: "title1", content: "default1", isClicked: false},
+        {id: 1, title: "title2", content: "default2", isClicked: false},
+        {id: 2, title: "title3", content: "default3", isClicked: false}
       ]
     }
   }
@@ -18,14 +17,15 @@ class App extends Component {
   save = (writingState) => {
     const {savedNotes} = this.state
     const lastNoteId = savedNotes[savedNotes.length - 1].id
-
+    
     this.setState({
       savedNotes: [
         ...savedNotes,
         {
           id: lastNoteId + 1,
           title: writingState.title,
-          content: writingState.content
+          content: writingState.content,
+          isFocused: false
         }
       ]
     })
@@ -38,6 +38,11 @@ class App extends Component {
     this.setState({
       savedNotes: savedNotes
     })
+  }
+
+  update = (index) => {
+    console.log(`${index} will be updated`)
+    
   }
 
   render() {
