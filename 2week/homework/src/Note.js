@@ -6,6 +6,7 @@ class Note extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      id: this.props.id,
       title: this.props.title,
       content: this.props.content,
       isClicked: this.props.isClicked,
@@ -17,6 +18,8 @@ class Note extends Component {
   }
 
   handleSubmit = (e) => {
+    console.log('update is submitted')
+    this.props.update(this.state.id, this.state.title, this.state.content)
     this.setState({
       title: this.state.title,
       content: this.state.content
@@ -33,7 +36,7 @@ class Note extends Component {
   }
 
   handleClickNote = (e) => {
-    console.log('handleClickNote function called!')
+
     if (!this.state.isClicked) {
       console.log('notes will be updated: false -> true')
       this.setState({isClicked: true})

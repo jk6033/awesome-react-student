@@ -40,9 +40,10 @@ class App extends Component {
     })
   }
 
-  update = (index) => {
+  update = (index, title_inp, content_inp) => {
     console.log(`${index} will be updated`)
-    
+    const {savedNotes} = this.state
+    savedNotes.splice(index, 1, {id: index, title: title_inp, content: content_inp, isClicked: false})
   }
 
   render() {
