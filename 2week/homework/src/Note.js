@@ -6,7 +6,6 @@ class Note extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      id: this.props.id,
       title: this.props.title,
       content: this.props.content,
       isClicked: this.props.isClicked,
@@ -19,7 +18,7 @@ class Note extends Component {
 
   handleSubmit = (e) => {
     console.log('update is submitted')
-    this.props.update(this.state.id, this.state.title, this.state.content)
+    this.props.update(this.props.id, this.state.title, this.state.content)
     this.setState({
       title: this.state.title,
       content: this.state.content
@@ -46,6 +45,28 @@ class Note extends Component {
     }
   }
 
+  setBoundary = (dom) => {
+    this.noteBoundary = dom
+  }
+// "", null
+  handleClickOutside = ({target}) => {
+//input이 변함이 없을때만 변경하도록 한다. 
+    if (this.noteBoundary && !this.noteBoundary.contains(target)){
+      this.setState({
+        isClicked: false
+      })
+    }
+
+  }
+
+  componentDidMount() {
+    document.addEventListener('mousedown', this.handdleClickOutside)
+  }
+
+  componentWillMount(){
+    document.removeEventListener('mousedown', this.handleClickOutside)
+  } 
+
 
   render() {
     const noteProps = {
@@ -60,7 +81,7 @@ class Note extends Component {
     return (
       //아래 내용들은 materialize에 있는 라이브러리와 클래스를 활용한 것 입니다.
       //materialize 의 grid부분을 참고해 주세요.
-      <div className='Note col s12 m4 l3'>
+      <div ref={this.setBoundary}className='Note col s12 m4 l3'>
         <div className='DeleteBtn'>
           <div className='DeleteBtn btn-floating btn-large'>
             <i onClick={this.handleClickDelete} id='Icon' className='material-icons'> delete </i>

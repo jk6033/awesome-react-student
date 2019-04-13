@@ -3,7 +3,7 @@ import './note.css'
 
 class Note extends Component {
     handleClickDelete = () => {
-      this.props.delete(this.props.index)
+      this.props.del(this.props.index)
     }
   
     render() {

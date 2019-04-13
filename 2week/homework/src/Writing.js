@@ -6,7 +6,8 @@ class Writing extends Component {
     this.state = {
       title: "awesome",
       content: "react",
-      isWritingTitleFocused: false
+      isWritingTitleFocused: false,
+      isContentFocused: false,
     }
   }
 
@@ -36,12 +37,25 @@ class Writing extends Component {
     }
   }
 
+  handleFocus2 = (e) => {
+    if (!this.state.isContentFocused) {
+      console.log('WritingContent gets focus')
+      this.setState({
+        isContentFocused: true
+      })
+    }
+  }
+
   handleBlur = (e) => {
-    if (this.state.isWritingTitleFocused && this.state.title==="" && this.state.content==="") {
+    if (this.state.isWritingTitleFocused && this.state.title==="" && this.state.content==="" && !this.state.isContentFocused) {
       console.log('WritingTitle loses focus')
       this.setState({
         isWritingTitleFocused: false
       })
+
+    }
+    if (!this.state.isContentFocused) {
+      console.log("Writing Content lose focus")
     }
   }
 
@@ -102,6 +116,7 @@ function WritingContent(props) {
         name='content'
         value={props.content}
         onChange={props.handleChange}
+        onFocus={props.handleFocus2}
         onBlur={props.handleBlur}
       />
     </div>

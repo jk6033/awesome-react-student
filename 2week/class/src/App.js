@@ -40,12 +40,13 @@ class App extends Component {
         
         <Writing save={this.save} />
         <div className='row'>
-          {this.state.savedNotes.map((note, index) => (
+          {this.state.savedNotes.map((note) => (
             <Note
               title={note.title}
               content={note.content}
-              index={index}
+              index={note.id}
               key={note.id}
+              del={this.delete}
             />
           ))}
         </div>
